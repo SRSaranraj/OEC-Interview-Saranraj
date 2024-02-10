@@ -65,3 +65,49 @@ export const getUsers = async () => {
 
     return await response.json();
 };
+
+
+export const getUserMappingList = async (procedureId, planId) => {
+    const url = `${api_url}/Users/GetUsersMappingList?procedureId=${procedureId}&planId=${planId}`;
+    const response = await fetch(url, {
+      method: "GET",
+    });
+  
+    if (!response.ok) throw new Error("Failed to get users");
+  
+    return await response.json();
+  };
+  
+  export const addUserToProcedure = async (userId, procedureId, planId) => {
+    const url = `${api_url}/Users/AddUsersToProcedure`;
+    var command = { planId: planId, procedureId: procedureId, userId: userId };
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(command),
+    });
+  
+    if (!response.ok) throw new Error("Failed to create plan");
+  
+    return response.json();
+  };
+  
+  export const removeUserFromProcedure = async (userId) => {
+    const url = `${api_url}/Users/RemoveUsersFromProcedure`;
+    var command = { userMappingId: userId };
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(command),
+    });
+  
+    if (!response.ok) throw new Error("Failed to create plan");
+  
+    return response.json();
+  };
